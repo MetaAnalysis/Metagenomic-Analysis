@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 24
+#SBATCH -p short
+
+#load modules 
+module load eb 
+module load Miniconda2
+
+# loading virtualenv
+source activate qiime1
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# ANOSIM pH
+compare_categories.py --method anosim -i ~/basic_pipeline/cdout/bdiv_even30000/weighted_unifrac_dm.txt -m ~/2018_02_smb/map_complete.tsv -c SamplePh -o ~/f_analysis/anosim_out_weighted_ph 
+
+source deactivate 

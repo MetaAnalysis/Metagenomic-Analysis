@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -t 1:00:00
+#SBATCH -n 24
+#SBATCH -p short
+
+#load modules 
+module load eb 
+module load Miniconda2
+
+# loading virtualenv
+source activate qiime1
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# splitting libraries
+echo "splitting libraries"
+split_libraries_fastq.py \-m map_complete.tsv \-i Read1.fastq.gz \-b Index.fastq.gz \-o ./slout \-q 19 \--rev_comp_barcode \--rev_comp_mapping_barcodes
+
+#deactivating environment 
+source deactivate 
